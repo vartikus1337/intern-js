@@ -1,4 +1,4 @@
-const DATA = await fetch('data.json').then((response) => response.json());
+import DATA from '/data.json' assert {type: "json"};
 const TITLES = ['Имя', 'Фамилия', 'Описания', 'Цвет глаз'];
 
 const pages = parsedPages(DATA, 10);
@@ -150,18 +150,14 @@ function createForm(elms, form) {
         // Замена значений в ячейках
         for (let i = 0; i < texts.length; i++) {
             if (i == 3) { // для изменения цвета
-                const form = elms[i].lastChild;
-                form.style.backgroundColor = texts[i].value;
-                form.lastChild.style.color = texts[i].value;
-                form.lastChild.textContent = texts[i].value;
+                const div = elms[i].lastChild;
+                console.log(div)
+                div.style.backgroundColor = texts[i].value;
+                div.lastChild.style.color = texts[i].value;
+                div.lastChild.textContent = texts[i].value;
                 continue;
             } 
-            if (i == 2) { // для текста about
-                elms[i].lastChild.textContent = texts[i].value;
-                continue;
-            }
-            
-            elms[i].textContent = texts[i].value; // для всего остального
+            elms[i].lastChild.textContent = texts[i].value; // для всего остального
         }
         formIsActive = false;
         form.remove(); 
