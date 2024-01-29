@@ -1,2 +1,3 @@
-// import from  
+import data from './data.json';
+
 
