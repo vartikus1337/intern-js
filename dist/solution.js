@@ -1,11 +1,10 @@
-"use strict"; 
+"use strict";
 // Код который сгенерировал TypeScript
 // var __importDefault = (this && this.__importDefault) || function (mod) {
 //     return (mod && mod.__esModule) ? mod : { "default": mod };
 // };
 // Object.defineProperty(exports, "__esModule", { value: true });
 // const data_json_1 = __importDefault(require("./data.json"));
-// const data = await fetch('data.json').then((response) => response.json());
 import data from '/data.json' assert {type: "json"};
 const titles = ['Имя', 'Фамилия', 'Описания', 'Цвет глаз'];
 const pages = parsedPages(data, 10);
@@ -89,17 +88,17 @@ function tableBody(indexPage) {
         addCellSimple(rowBody, about, 'col-2');
         addCellColor(rowBody, color);
         rowBody.onclick = (e) => {
+            var _a;
             const target = e.target;
             if (e.target == null)
                 return;
             if (target.localName != 'p')
                 return; // Если пользователь нажал не на элемент строки
-            let tr = target.parentNode; // Элемент tr в котором находится текст
+            let tr = (_a = target.parentNode) === null || _a === void 0 ? void 0 : _a.parentNode; // Элемент tr в котором находится текст
             if (formIsActive)
                 return; // Если уже в режиме редактирования
             if (tr.localName != 'tr')
-                tr = tr.parentNode;
-            ; // Для колонки с цветом т.к. p наход в div
+                tr = tr.parentNode; // Для колонки с цветом т.к. p наход в div
             showForm(tr);
         };
     });
@@ -165,6 +164,10 @@ function createForm(elms, form) {
                     }
                 }
                 continue;
+            }
+            const lastChild = elms[i].lastChild;
+            if (lastChild instanceof Node) {
+                lastChild.textContent = texts[i].value; // для всего остального
             }
         }
         formIsActive = false;

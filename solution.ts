@@ -110,9 +110,9 @@ function tableBody(indexPage: number) {
       const target = e.target as HTMLElement;
       if (e.target == null) return; 
       if (target.localName != 'p') return;  // Если пользователь нажал не на элемент строки
-      let tr = target.parentNode as HTMLElement; // Элемент tr в котором находится текст
+      let tr = target.parentNode?.parentNode as HTMLElement; // Элемент tr в котором находится текст
       if (formIsActive) return; // Если уже в режиме редактирования
-      if (tr.localName != 'tr') tr = tr.parentNode as HTMLElement;; // Для колонки с цветом т.к. p наход в div
+      if (tr.localName != 'tr') tr = tr.parentNode as HTMLElement; // Для колонки с цветом т.к. p наход в div
       showForm(tr as HTMLTableRowElement);
     };
   });
@@ -183,6 +183,11 @@ function createForm(elms: Element[], form: HTMLElement) {
           }
           continue;
         }
+        const lastChild = elms[i].lastChild;
+        if (lastChild instanceof Node) {
+              lastChild.textContent = texts[i].value; // для всего остального
+        }
+         
       }
       formIsActive = false;
       form.remove(); 
